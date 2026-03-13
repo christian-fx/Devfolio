@@ -11,7 +11,7 @@ program
 
 // INTERACTIVE SETUP
 program
-    .command('setup')
+    .command('init')
     .description('Run interactive setup to generate a portfolio')
     .action(async () => {
         const { username, template } = await runInteractiveGenerate();
@@ -20,14 +20,14 @@ program
 
 
 
-// ONE-LINER FOR NON-INTERACTIVE USAGE (eg: npx devfolio generate <username> --template modern)
+// ONE-LINER FOR NON-INTERACTIVE USAGE (eg: npx devfolio generate <username> <modern>)
 program
     .command('generate')
     .description('Generate a portfolio for the given GitHub username in one command')
     .argument('<username>', 'GitHub username to generate portfolio for')
-    .option('-t, --template <template>', 'Template to use (modern | minimal)', 'minimal')
+    .option('-t, --template <template>', 'Template to use (minimal or modern)', 'minimal')
     .action(async (username, options) => {
-        await runGenerate(username, options);
+        await runGenerate(username, { template: options.template });
     });
 
 
